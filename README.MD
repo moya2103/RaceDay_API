@@ -103,7 +103,7 @@ View the live build status: [Actions tab](https://github.com/moya2103/RaceDay_AP
 
 ### Green Build Screenshot
 
-![CI Green Build](docs/ci-green-build.png)
+![CI Green Build](ci-green-build.png)
 
 ---
 
