@@ -38,7 +38,7 @@ A full-stack RESTful API for the RaceDay event management platform, built with A
 
 1. Clone the repository:
    ```
-   git clone https://github.com/<your-username>/RaceDay_API.git
+   git clone https://github.com/<moya2103>/RaceDay_API.git
    ```
 
 2. Open `RaceDay.API.sln` in Visual Studio 2022.
@@ -157,6 +157,8 @@ RaceDay_API/
 ```
 
 ---
+##Repository link
+(https://github.com/moya2103/RaceDay_API)
 
 ## Video Presentation
 
