@@ -1,0 +1,78 @@
+﻿@model IEnumerable<RaceDay.Web.Models.CategoryDto>
+@{
+    ViewData["Title"] = "Manage Categories";
+    int eventId = ViewBag.EventId;
+}
+
+<div class="mb-4">
+    <a asp-action="Dashboard" class="btn btn-outline-secondary btn-sm mb-3"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
+    <h1 class="fw-bold">Categories for: <span class="text-primary">@ViewBag.EventName</span></h1>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="row">
+    <!-- Left Side: Add New Category -->
+    <div class="col-md-4">
+        <div class="card p-4">
+            <h4 class="fw-bold mb-3">Add New Category</h4>
+            <form asp-action="AddCategory" method="post">
+                <input type="hidden" name="eventId" value="@eventId" />
+
+                <div class="mb-2">
+                    <label class="form-label">Category Name</label>
+                    <input name="Name" class="form-control" required placeholder="e.g. Senior Men" />
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Entry Fee (R)</label>
+                    <input name="EntryFee" type="number" step="0.01" class="form-control" />
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6">
+                        <label class="form-label">Min Age</label>
+                        <input name="MinAge" type="number" class="form-control" />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label">Max Age</label>
+                        <input name="MaxAge" type="number" class="form-control" />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mt-3">Add Category</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Right Side: Existing Categories -->
+    <div class="col-md-8">
+        <h4 class="fw-bold mb-3">Existing Categories</h4>
+        @if (!Model.Any())
+        {
+            <div class="alert alert-dark text-center py-4 border-secondary">
+                <p class="mb-0 text-muted">No categories added yet.</p>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                @foreach (var cat in Model)
+                {
+                    <div class="col-md-6 mb-3">
+                        <div class="card p-3 h-100 border-secondary">
+                            <h5 class="text-primary fw-bold">@cat.Name</h5>
+                            <p class="mb-1"><strong>Fee:</strong> R @cat.EntryFee?.ToString("0.00")</p>
+                            <p class="mb-0"><strong>Age:</strong> @(cat.MinAge.HasValue ? $"{cat.MinAge}-{cat.MaxAge}" : "Open")</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

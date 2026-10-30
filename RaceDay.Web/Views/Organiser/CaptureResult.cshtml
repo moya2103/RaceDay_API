@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Capture Result";
+    int enrolmentId = ViewBag.EnrolmentId;
+    int eventId = ViewBag.EventId;
+}
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card shadow-lg p-5">
+            <h2 class="fw-bold mb-4 text-primary">Capture Finish Result</h2>
+
+            <form asp-action="CaptureResult" method="post">
+                <input type="hidden" name="enrolmentId" value="@enrolmentId" />
+                <input type="hidden" name="eventId" value="@eventId" />
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Finish Time (HH:mm:ss)</label>
+                    <input name="FinishTime" class="form-control form-control-lg" placeholder="e.g. 03:45:30" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Finishing Position</label>
+                    <input name="Position" type="number" class="form-control" placeholder="e.g. 47" />
+                </div>
+
+                <div class="mb-4 form-check">
+                    <input name="IsCompleted" type="checkbox" value="true" class="form-check-input" checked />
+                    <label class="form-check-label fw-bold">Mark as Completed</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold">Publish Result</button>
+            </form>
+        </div>
+    </div>
+</div>
