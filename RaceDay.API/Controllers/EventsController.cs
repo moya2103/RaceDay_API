@@ -4,6 +4,7 @@ using RaceDay.API.Data;
 using RaceDay.API.DTOs;
 using RaceDay.API.Helpers;
 using RaceDay.API.Models;
+using RaceDay.API.Services;
 
 namespace RaceDay.API.Controllers;
 
@@ -12,8 +13,13 @@ namespace RaceDay.API.Controllers;
 public class EventsController : ControllerBase
 {
     private readonly RaceDayDbContext _db;
+    private readonly IBlobService _blobService;
 
-    public EventsController(RaceDayDbContext db) => _db = db;
+    public EventsController(RaceDayDbContext db, IBlobService blobService)
+    {
+        _db = db;
+        _blobService = blobService;
+    }
 
     /// <summary>
     /// Lists all active events. Public. Optional filters by eventType and start date.
@@ -104,32 +110,49 @@ public class EventsController : ControllerBase
     /// <returns>201 Created with event; 400 on validation; 403 if not organiser</returns>
     [HttpPost]
     [SessionAuthorize("Organiser")]
-    public async Task<IActionResult> Create([FromBody] CreateEventDto dto)
+    public async Task<IActionResult> Create([FromForm] CreateEventDto dto, IFormFile? bannerImage)
     {
-        if (dto.EventType != "Run" && dto.EventType != "Walk" && dto.EventType != "Cycle")
-            return BadRequest(new { message = "EventType must be Run, Walk, or Cycle" });
-
-        var userId = HttpContext.Session.GetUserId()!.Value;
-        var organiser = await _db.Organisers.FirstOrDefaultAsync(o => o.UserID == userId);
-        if (organiser == null) return StatusCode(403, new { message = "Forbidden" });
-
-        var ev = new Event
+        try
         {
-            OrganiserID = organiser.OrganiserID,
-            Name = dto.Name,
-            Description = dto.Description,
-            EventDate = dto.EventDate,
-            Location = dto.Location,
-            Distance = dto.Distance,
-            EventType = dto.EventType,
-            CreatedAt = DateTime.UtcNow,
-            IsActive = true
-        };
+            if (dto.EventType != "Run" && dto.EventType != "Walk" && dto.EventType != "Cycle")
+                return BadRequest(new { message = "EventType must be Run, Walk, or Cycle" });
 
-        _db.Events.Add(ev);
-        await _db.SaveChangesAsync();
+            var userId = HttpContext.Session.GetUserId()!.Value;
+            var organiser = await _db.Organisers.FirstOrDefaultAsync(o => o.UserID == userId);
+            if (organiser == null) return StatusCode(403, new { message = "Forbidden" });
 
-        return StatusCode(201, new { ev.EventID, ev.Name });
+            string? bannerUrl = null;
+            if (bannerImage != null && bannerImage.Length > 0)
+            {
+                using var stream = bannerImage.OpenReadStream();
+                // THIS IS WHERE IT'S FAILING
+                bannerUrl = await _blobService.UploadFileAsync(stream, bannerImage.FileName);
+            }
+
+            var ev = new Event
+            {
+                OrganiserID = organiser.OrganiserID,
+                Name = dto.Name,
+                Description = dto.Description,
+                EventDate = dto.EventDate,
+                Location = dto.Location,
+                Distance = dto.Distance,
+                EventType = dto.EventType,
+                BannerImage = bannerUrl,
+                CreatedAt = DateTime.UtcNow,
+                IsActive = true
+            };
+
+            _db.Events.Add(ev);
+            await _db.SaveChangesAsync();
+
+            return StatusCode(201, new { ev.EventID, ev.Name });
+        }
+        catch (Exception ex)
+        {
+            // Return the exact Azure error to the MVC app
+            return StatusCode(500, new { message = "Azure Upload Failed: " + ex.Message });
+        }
     }
 
     /// <summary>
