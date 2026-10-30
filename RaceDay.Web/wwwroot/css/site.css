@@ -1,0 +1,113 @@
+/* --- RaceDay Active Theme --- */
+:root {
+    --bg-dark: #121212;
+    --surface-dark: #1E1E1E;
+    --primary-lime: #CCFF00;
+    --secondary-magenta: #FF0055;
+    --text-main: #FFFFFF;
+    --text-muted: #B3B3B3;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+}
+
+/* Navbar Overrides */
+.navbar {
+    background-color: var(--surface-dark) !important;
+    border-bottom: 1px solid #333 !important;
+}
+
+.navbar-brand {
+    color: var(--primary-lime) !important;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    color: var(--text-main) !important;
+    font-weight: 600;
+}
+
+    .nav-link:hover {
+        color: var(--primary-lime) !important;
+    }
+
+/* Cards */
+.card {
+    background-color: var(--surface-dark);
+    border: 1px solid #333;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(204, 255, 0, 0.2);
+        border-color: var(--primary-lime);
+    }
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-lime);
+    color: #000;
+    border: none;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+    .btn-primary:hover {
+        background-color: #b3e600;
+        color: #000;
+        box-shadow: 0 0 10px rgba(204, 255, 0, 0.5);
+    }
+
+.btn-danger {
+    background-color: var(--secondary-magenta);
+    border: none;
+}
+
+/* Forms */
+.form-control, .form-select {
+    background-color: var(--bg-dark);
+    border: 1px solid #333;
+    color: var(--text-main);
+}
+
+    .form-control:focus, .form-select:focus {
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        border-color: var(--primary-lime);
+        box-shadow: 0 0 0 0.25rem rgba(204, 255, 0, 0.25);
+    }
+
+/* Typography & Utilities */
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+a {
+    color: var(--primary-lime);
+    text-decoration: none;
+}
+
+    a:hover {
+        color: #b3e600;
+    }
+
+/* Footer */
+.footer {
+    background-color: var(--surface-dark) !important;
+    color: var(--text-muted) !important;
+    border-top: 1px solid #333 !important;
+}
