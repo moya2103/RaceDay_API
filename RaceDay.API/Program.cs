@@ -27,8 +27,8 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 // Controllers
 builder.Services.AddControllers();
 
-// Swagger
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddScoped<IBlobService, BlobService>();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -86,7 +86,6 @@ app.UseSwaggerUI(c =>
     c.EnableDeepLinking();
 });
 
-app.UseHttpsRedirection();
 
 // Order matters: Session before anything reading HttpContext.Session
 app.UseSession();
