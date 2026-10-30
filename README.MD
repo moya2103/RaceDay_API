@@ -80,7 +80,7 @@ text
 dotnet test
 CI/CD
 GitHub Actions runs on every push and pull request:
-
+![Successful Actions](ci-green-build.png)
 Restores NuGet packages
 
 Builds the solution in Release configuration
