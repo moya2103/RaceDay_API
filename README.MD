@@ -52,9 +52,9 @@ This project consists of two parts: the **API** (Part 2) and the **MVC Front-End
 2. Build the Docker image:
    ```bash
    docker build -t raceday-web -f RaceDay.Web/Dockerfile .
-3.Run the container:
-```bash
-docker run -d -p 8080:8080 --name raceday-container raceday-web.
+3. Run the container:
+  ```bash
+docker run -d -p 8080:8080 --name raceday-container raceday-web
 
 4. Open your browser and navigate to: http://localhost:8080
 
