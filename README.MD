@@ -62,7 +62,7 @@ Default Test Accounts
 Role	Email	Password
 Organiser	organiser@raceday.co.za	Pass123!
 Participant	participant@raceday.co.za	Pass123!
-☁️ Azure Blob Storage Integration
+Azure Blob Storage Integration
 Organisers can upload a banner image when creating an event.
 
 The MVC app sends the image to the API via MultipartFormDataContent.
