@@ -1,4 +1,4 @@
-# RaceDay — Event Management System
+7# RaceDay — Event Management System
 
 ![RaceDay CI](https://github.com/moya2103/RaceDay_API/actions/workflows/ci.yml/badge.svg)
 
@@ -120,7 +120,7 @@ RaceDay_API/
     ├── appsettings.json
     └── Program.cs
 Video Presentation
-Unlisted YouTube walkthrough: [Your YouTube Link Here]
+Unlisted YouTube walkthrough: [https://youtu.be/6z1dmKTF0PQ?si=Bpq4FX8jlTfwG1W5]
 
 Notes on the Database
 The API uses Entity Framework Core Code-First with migrations. The database schema matches the Part 1 ERD and SQL script.
